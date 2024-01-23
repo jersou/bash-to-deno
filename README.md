@@ -21,6 +21,7 @@ From https://github.com/google/zx :
 > and gives sensible defaults.
 
 → [examples in bash-to-deno.ts](./bash-to-deno.ts)
+→ [example with basic CLI in cli-lite-example.ts](./cli-lite-example.ts)
 
 ## Official Doc
 
@@ -28,3 +29,4 @@ From https://github.com/google/zx :
 - Deno API : https://deno.land/api
 - Deno Standard Library : https://deno.land/std?doc
 - Deno Manual : https://docs.deno.com/runtime/manual
+- CliteParser : https://github.com/jersou/clite-parser
