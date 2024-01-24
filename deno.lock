@@ -137,6 +137,7 @@
     "https://deno.land/std@0.212.0/text/word_similarity_sort.ts": "579760a2cb4075a6d5960bce161eb8bb84ea3d15f0747bb55f190a2b122b94fb",
     "https://deno.land/x/clite_parser@0.1.0/clite_parser.ts": "f5d3c98f3678307d951c53f1d84e22f2460c35659a917efcf134c0e715cb25dc",
     "https://deno.land/x/clite_parser@0.1.1/clite_parser.ts": "925bbc1351c27d1a48c67ae4f510d8a29bc8b2fbc154e5afbe270e5b36098032",
+    "https://deno.land/x/clite_parser@0.1.3/clite_parser.ts": "cefb536853720fafc34f0957e23180e97ad4bd874ce1a62aa887e21a948ef43a",
     "https://deno.land/x/dax@0.36.0/mod.ts": "b6d68abbf111cf1dac5f49d857ddfd97214954a00683d17c769b8cb9c8453f73",
     "https://deno.land/x/dax@0.36.0/src/command.ts": "9741292cbdf1e0726e03ae868a8c8913166addef4e49ae7e9cb880b42014e36f",
     "https://deno.land/x/dax@0.36.0/src/command_handler.ts": "56ee6893bf5ec829c370fe5a9367f60b3590e571f7b69153d48686779ab14d98",

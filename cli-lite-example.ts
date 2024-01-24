@@ -6,7 +6,7 @@
 // $ ./cli-lite-example.ts readFile .gitignore
 // $ ./cli-lite-example.ts --help
 
-import { cliteRun } from "https://deno.land/x/clite_parser@0.1.1/clite_parser.ts";
+import { cliteRun } from "https://deno.land/x/clite_parser@0.1.3/clite_parser.ts";
 import $ from "https://deno.land/x/dax@0.36.0/mod.ts";
 import "https://deno.land/x/dax_extras@2.3.2-0.36.0/mod.ts";
 import * as colors from "https://deno.land/std@0.209.0/fmt/colors.ts";
@@ -15,6 +15,7 @@ class Tool {
   webUrl = "none";
 
   constructor() {
+    $.cd(import.meta);
     $.setPrintCommand(true);
   }
 
@@ -25,7 +26,7 @@ class Tool {
 
   async exec_date() {
     const output = await $`date`.text(); // exec command
-    console.log(colors.bgBrightBlue(output), this.webUrl); // colored log
+    console.log(colors.bgBrightBlue(output), this); // colored log
   }
 
   readFile(path = "./deno.json") {
