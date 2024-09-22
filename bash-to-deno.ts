@@ -2,9 +2,9 @@
 // use this shebang ↑ and add exec permission (chmod +x script.ts)
 // to exec the script directly : ./script.ts
 
-import $ from "https://deno.land/x/dax@0.36.0/mod.ts";
-import "https://deno.land/x/dax_extras@2.3.2-0.36.0/mod.ts";
-import { bgBrightBlue } from "https://deno.land/std@0.209.0/fmt/colors.ts";
+import $ from "jsr:@david/dax@0.42.0";
+import { bgBrightBlue } from "jsr:@std/fmt@1.0.2/colors";
+import { TextLineStream, toTransformStream } from "jsr:@std/streams@1.0.5";
 
 const output = await $`date`.text(); // exec command
 console.log(bgBrightBlue(output)); // colored log
@@ -18,7 +18,6 @@ $.logLight(content);
 // ------------------------------------------------------------
 //
 // Dax $... : https://github.com/dsherret/dax
-// dax_extras : https://github.com/impactaky/dax_extras
 // Deno API : https://deno.land/api
 // Deno Standard Library : https://deno.land/std?doc
 // Deno Manual : https://docs.deno.com/runtime/manual
@@ -213,51 +212,49 @@ console.log("typescript from dprint", data.typescript);
 // const result = await $`test=123 deno eval 'console.log(Deno.env.get('test'))'`;
 // console.log(result.stdout); // 123
 
-// from dax_extras
+// from dax
 console.log();
-console.log("dax_extras ↓");
+console.log("dax ↓");
 
-// dax_extras : Save command stdout to a file.
-await $`echo test`.toFile("/tmp/dax_extra_test");
+// dax : Save command stdout to a file.
+await $`echo test > /tmp/dax_test`;
 
-// dax_extras : stdout pipe to next command stdin.
-await $`echo test; echo toto12; echo tata`.$(`grep toto`);
+// dax : stdout pipe to next command stdin.
 await $`echo test; echo toto13; echo tata`.pipe($`grep toto`);
 
-// dax_extras : Apply map function to each line of command stdout.
+// dax : Apply map function to each line of command stdout.
 console.log(
   "map",
-  await $`echo test; echo toto12; echo tata`.map((l) => `res=${l}`).lines(),
+  (await $`echo test; echo toto12; echo tata`.lines()).map((l) => `res=${l}`),
 );
 
-await $`echo test; sleep 1; echo toto12; sleep 1; echo tata`.map((l) => {
-  console.log("map live ", l);
-  return "";
-}).lines();
+const childL = $`echo test; sleep 1; echo toto12; sleep 1; echo tata`.stdout(
+  "piped",
+).spawn();
+const stream = childL.stdout()
+  .pipeThrough(new TextDecoderStream())
+  .pipeThrough(new TextLineStream())
+  .pipeThrough(
+    toTransformStream(async function* (src: any) {
+      for await (const chunk of src) {
+        if (chunk.trim().length !== 0) {
+          console.log({ chunk });
+          yield `map live ${chunk}`;
+        }
+      }
+    }),
+  );
 
-// dax_extras : Apply filter function to each line of command stdout.
+for await (const streamElement of stream) {
+  console.log({ streamElement });
+}
+
+// dax : Apply filter function to each line of command stdout.
 console.log(
   "filter",
-  await $`echo test; echo toto12; echo tata`.filter((l) => l.startsWith("toto"))
-    .lines(),
-);
-
-// dax_extras : Execute command with each line of command stdout as arguments.
-console.log(
-  "xargs",
-  await $`echo test; sleep 1; echo toto12; sleep 1; echo tata`.xargs((l) => {
-    console.log("xargs live ", l);
-    return $`echo xargs with ${l}`;
-  })
-    .lines(),
-);
-
-// dax_extras : Apply function to each line of command stdout. If applied function return undefined, the line will be ignored.
-console.log(
-  "apply = filter & map",
-  await $`echo test; echo toto12; echo tata`.apply((l) =>
-    l.startsWith("toto") ? undefined : `res=${l}`
-  ).lines(),
+  (await $`echo test; echo toto12; echo tata`.lines()).filter((l) =>
+    l.startsWith("toto")
+  ),
 );
 
 // if the file is imported, do not execute this block

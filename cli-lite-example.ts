@@ -5,10 +5,20 @@
 // $ ./cli-lite-example.ts exec_date
 // $ ./cli-lite-example.ts readFile .gitignore
 // $ ./cli-lite-example.ts --help
+// Usage: <Tool file> [Options] [command [command args]]
+//
+// Commands:
+//   main             (default)
+// exec_date
+// readFile <path>
+//
+// Options:
+//   --web-url=<WEB_URL>  (default "none")
+// --help               Show this help
 
-import { cliteRun } from "https://deno.land/x/clite_parser@0.1.7/clite_parser.ts";
-import $ from "https://deno.land/x/dax@0.36.0/mod.ts";
-import * as colors from "https://deno.land/std@0.212.0/fmt/colors.ts";
+import { cliteRun } from "jsr:@jersou/clite@0.3.2";
+import $ from "jsr:@david/dax@0.42.0";
+import * as colors from "jsr:@std/fmt@1.0.2/colors";
 
 class Tool {
   webUrl = "none";

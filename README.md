@@ -28,6 +28,6 @@ From https://github.com/google/zx :
 
 - Dax : https://github.com/dsherret/dax
 - Deno API : https://deno.land/api
-- Deno Standard Library : https://deno.land/std?doc
+- Deno Standard Library : https://jsr.io/@std
 - Deno Manual : https://docs.deno.com/runtime/manual
 - CliteParser : https://github.com/jersou/clite-parser
